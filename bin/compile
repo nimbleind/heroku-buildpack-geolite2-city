@@ -1,0 +1,23 @@
+#!/bin/bash
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+URL=http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
+FILE_NAME=$(basename $URL)
+DB_FILE=GeoLite2-City.mmdb
+
+if [ ! -f ${CACHE_DIR}/${DB_FILE} ]; then
+  echo "Downloading GeoLite2 locations database"
+  curl -s -O $URL
+  ENTRY=$( tar -ztpf $FILE_NAME | grep $DB_FILE )
+  tar --strip-components 1 -xvpf $FILE_NAME $ENTRY
+  cp $DB_FILE $CACHE_DIR
+  rm -v $FILE_NAME $DB_FILE
+fi
+
+echo "Installing GeoLite2 locations database"
+
+cp $CACHE_DIR/$DB_FILE $BUILD_DIR/tmp
+
