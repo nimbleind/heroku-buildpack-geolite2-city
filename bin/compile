@@ -18,6 +18,6 @@ if [ ! -f ${CACHE_DIR}/${DB_FILE} ]; then
 fi
 
 echo "Installing GeoLite2 locations database"
-
+mkdir -p $BUILD_DIR/tmp
 cp $CACHE_DIR/$DB_FILE $BUILD_DIR/tmp
 
