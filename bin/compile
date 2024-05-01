@@ -18,11 +18,11 @@ fi
 
 URL="https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&suffix=tar.gz&license_key=${MAXMIND_LICENSE_KEY}"
 
-FILE_NAME=$(basename $URL)
+FILE_NAME=GeoLite2-City.tar.gz
 DB_FILE=GeoLite2-City.mmdb
 
 echo "Downloading GeoLite2 locations database"
-curl -s -O $URL
+curl -L -s -o $FILE_NAME $URL
 ENTRY=$( tar -ztpf $FILE_NAME | grep $DB_FILE )
 tar --strip-components 1 -xvpf $FILE_NAME $ENTRY
 
